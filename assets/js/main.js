@@ -308,9 +308,39 @@ if (contactForm) {
         }
 
         if (isValid) {
-            // Show success message (you can replace this with actual form submission)
-            alert('Thank you! Your message has been sent successfully.');
-            contactForm.reset();
+            // Get form values
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const project = projectInput.value.trim();
+            
+            // Your email address
+            const yourEmail = 'ganeshshinde94016@gmail.com';
+            
+            // Create subject with the sender's name
+            const subject = encodeURIComponent(`Contact from ${name}`);
+            
+            // Create email body with project description and sender's email
+            const body = encodeURIComponent(
+                `Hello,\n\n` +
+                `I would like to discuss the following project:\n\n` +
+                `${project}\n\n` +
+                `Contact Information:\n` +
+                `Name: ${name}\n` +
+                `Email: ${email}\n\n` +
+                `Best regards,\n${name}`
+            );
+            
+            // Create mailto link
+            const mailtoLink = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            setTimeout(() => {
+                alert('Thank you! Your email client should open shortly. Please send the email to complete your message.');
+                contactForm.reset();
+            }, 500);
         } else {
             alert('Please fill in all fields correctly.');
         }
