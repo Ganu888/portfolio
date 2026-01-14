@@ -414,8 +414,7 @@ img {
 
 .skills__data {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     margin-bottom: var(--mb-1);
 }
 
@@ -1060,6 +1059,23 @@ img {
 
     .skills__container {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .skills__category {
+        padding: 1.25rem;
+    }
+
+    .skills__header {
+        margin-bottom: var(--mb-1);
+    }
+
+    .skills__icon {
+        font-size: 1.25rem;
+    }
+
+    .skills__title {
+        font-size: var(--h3-font-size);
     }
 
     .services__container {
