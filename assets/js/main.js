@@ -351,14 +351,62 @@ if (contactForm) {
 const header = document.getElementById('header');
 
 function scrollHeader() {
+    const isDarkMode = body.classList.contains('dark-theme');
     if (window.scrollY >= 100) {
-        header.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.15)';
+        header.style.boxShadow = isDarkMode 
+            ? '0 2px 8px rgba(0, 0, 0, 0.5)' 
+            : '0 2px 8px rgba(0, 0, 0, 0.15)';
     } else {
-        header.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+        header.style.boxShadow = isDarkMode 
+            ? '0 2px 4px rgba(0, 0, 0, 0.3)' 
+            : '0 2px 4px rgba(0, 0, 0, 0.1)';
     }
 }
 
 window.addEventListener('scroll', scrollHeader);
+
+/* ===== DARK/LIGHT MODE TOGGLE ===== */
+const themeButton = document.getElementById('theme-button');
+const body = document.body;
+
+// Check for saved theme preference or default to light mode
+const getTheme = () => {
+    return localStorage.getItem('theme') || 'light';
+};
+
+// Apply theme
+const applyTheme = (theme) => {
+    if (theme === 'dark') {
+        body.classList.add('dark-theme');
+        themeButton.classList.remove('fa-moon');
+        themeButton.classList.add('fa-sun');
+    } else {
+        body.classList.remove('dark-theme');
+        themeButton.classList.remove('fa-sun');
+        themeButton.classList.add('fa-moon');
+    }
+};
+
+// Initialize theme on page load
+const currentTheme = getTheme();
+applyTheme(currentTheme);
+
+// Toggle theme on button click
+if (themeButton) {
+    themeButton.addEventListener('click', () => {
+        const currentTheme = getTheme();
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Save theme preference
+        localStorage.setItem('theme', newTheme);
+        
+        // Apply new theme
+        applyTheme(newTheme);
+        
+        // Update header shadow for new theme
+        scrollHeader();
+    });
+}
 
 /* ===== INITIALIZE ON LOAD ===== */
 window.addEventListener('load', () => {
